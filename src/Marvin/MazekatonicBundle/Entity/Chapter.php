@@ -3,15 +3,14 @@
 namespace Marvin\MazekatonicBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-use Doctrine\Common\Collections\ArrayCollection;
 
 /**
- * Node
+ * Chapter
  *
  * @ORM\Table()
  * @ORM\Entity
  */
-class Node
+class Chapter
 {
     /**
      * @var integer
@@ -36,17 +35,6 @@ class Node
     protected $content;
 
     /**
-     * @ORM\OneToMany(targetEntity="Edge", mappedBy="source")
-     */
-    protected $edges;
-
-    public function __construct()
-    {
-        $this->setEdges(new ArrayCollection());
-    }
-
-
-    /**
      * Get id
      *
      * @return integer
@@ -60,7 +48,7 @@ class Node
      * Set title
      *
      * @param string $title
-     * @return Node
+     * @return Chapter
      */
     public function setTitle($title)
     {
@@ -83,7 +71,7 @@ class Node
      * Set content
      *
      * @param string $content
-     * @return Node
+     * @return Chapter
      */
     public function setContent($content)
     {
@@ -102,32 +90,7 @@ class Node
         return $this->content;
     }
 
-    /**
-     * Set edges
-     *
-     * @param ArrayCollection $edges
-     * @return Node
-     */
-    public function setEdges(ArrayCollection $edges)
-    {
-        $this->edges = $edges;
-
-        return $this;
-    }
-
-    /**
-     * Get edges
-     *
-     * @return ArrayCollection
-     */
-    public
-    function getEdges()
-    {
-        return $this->edges;
-    }
-
-    public
-    function toArray()
+    public function toArray()
     {
         return ['title' => $this->title, 'content' => $this->content];
     }

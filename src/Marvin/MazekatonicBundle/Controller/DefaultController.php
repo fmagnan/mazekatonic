@@ -2,8 +2,7 @@
 
 namespace Marvin\MazekatonicBundle\Controller;
 
-use Marvin\MazekatonicBundle\Entity\Edge;
-use Marvin\MazekatonicBundle\Entity\Node;
+use Marvin\MazekatonicBundle\Entity\Chapter;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -19,51 +18,43 @@ class DefaultController extends Controller
      */
     public function indexAction()
     {
-        $nodeRepository = $this->getDoctrine()->getRepository('MarvinMazekatonicBundle:Node');
-        return ['nodes' => $nodeRepository->findAll()];
+        $chapterRepository = $this->getDoctrine()->getRepository('MarvinMazekatonicBundle:Chapter');
+        return ['chapters' => $chapterRepository->findAll()];
     }
 
     /**
-     * @Route("/node/{id}", requirements={"id" = "\d+"}, defaults={"id" = "1"})
+     * @Route("/chapter/{id}", requirements={"id" = "\d+"}, defaults={"id" = "1"})
      * @Template
      */
-    public function nodeAction($id)
+    public function chapterAction($id)
     {
-        $node = $this->getDoctrine()
-            ->getRepository('MarvinMazekatonicBundle:Node')
+        $chapter = $this->getDoctrine()
+            ->getRepository('MarvinMazekatonicBundle:Chapter')
             ->find($id);
 
-        if (!$node) {
-            throw $this->createNotFoundException('No node found for id: ' . $id);
+        if (!$chapter) {
+            throw $this->createNotFoundException('No chapter found for id: ' . $id);
         }
 
-        return ['node' => $node, 'edges' => $node->getEdges()];
+        return ['chapter' => $chapter];
     }
 
     /**
-     * @Route("/node/new")
+     * @Route("/chapter/new")
      */
-    public function createNodeAction()
+    public function createChapterAction()
     {
-        $node = new Node();
-        $node->setTitle('Départ');
-        $node->setContent('Vous êtes dans la forêt, 2 chemins s\'offrent à vous.');
-
-        $left = new Edge();
-        $left->setText('Partir sur la gauche');
-        $left->bindTo($node);
+        $chapter = new Chapter();
+        $chapter->setTitle('Départ');
+        $chapter->setContent('Vous êtes dans la forêt, 2 chemins s\'offrent à vous.');
 
 
-        $right = new Edge();
-        $right->setText('Partir sur la droite');
-        $right->bindTo($node);
 
         $em = $this->getDoctrine()->getManager();
-        $em->persist($node);
-        $em->persist($left);
-        $em->persist($right);
+        $em->persist($chapter);
+
         $em->flush();
 
-        return new Response('Created node id ' . $node->getId());
+        return new Response('Created chapter id ' . $chapter->getId());
     }
 }
