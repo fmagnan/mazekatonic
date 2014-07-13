@@ -1,5 +1,7 @@
 # Mazekatonic
 
+Gamebook viewer
+
 http://jolicode.github.io/best-bundle-conf
 
 http://knpbundles.com/
