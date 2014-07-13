@@ -3,6 +3,7 @@
 namespace Marvin\MazekatonicBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\Common\Collections\ArrayCollection;
 
 /**
  * Chapter
@@ -17,15 +18,16 @@ class Chapter
      *
      * @ORM\Column(name="id", type="integer")
      * @ORM\Id
+     * @ORM\GeneratedValue(strategy="AUTO")
      */
     protected $id;
 
     /**
-     * @var string
+     * @var integer
      *
-     * @ORM\Column(name="title", type="string", length=255)
+     * @ORM\Column(name="position", type="integer")
      */
-    protected $title;
+    protected $position;
 
     /**
      * @var string
@@ -33,6 +35,22 @@ class Chapter
      * @ORM\Column(name="content", type="text")
      */
     protected $content;
+
+    /**
+     * @ORM\OneToMany(targetEntity="Link", mappedBy="chapter")
+     */
+    protected $links;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="Book", inversedBy="chapters")
+     * @ORM\JoinColumn(name="book", referencedColumnName="id")
+     */
+    protected $book;
+
+    public function __construct()
+    {
+        $this->links = new ArrayCollection();
+    }
 
     /**
      * Get id
@@ -45,26 +63,26 @@ class Chapter
     }
 
     /**
-     * Set title
+     * Set position
      *
-     * @param string $title
+     * @param int $position
      * @return Chapter
      */
-    public function setTitle($title)
+    public function setPosition($position)
     {
-        $this->title = $title;
+        $this->position = $position;
 
         return $this;
     }
 
     /**
-     * Get title
+     * Get position
      *
-     * @return string
+     * @return int
      */
-    public function getTitle()
+    public function getPosition()
     {
-        return $this->title;
+        return $this->position;
     }
 
     /**
@@ -88,6 +106,29 @@ class Chapter
     public function getContent()
     {
         return $this->content;
+    }
+
+    /**
+     * add link to links set
+     *
+     * @param Link $link
+     * @return Node
+     */
+    public function addLink(Link $link)
+    {
+        $this->links->add($link);
+
+        return $this;
+    }
+
+    /**
+     * Get links
+     *
+     * @return ArrayCollection
+     */
+    public function getLinks()
+    {
+        return $this->links;
     }
 
     public function toArray()
