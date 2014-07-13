@@ -1,10 +1,10 @@
 {% extends "MarvinMazekatonicBundle::layout.html.twig" %}
 
 {% block content %}
+    <p>liste des chapitres :</p>
     <ul>
-        <li><a href="/app_dev.php/chapter/new">add chapter</a></li>
         {% for chapter in chapters %}
-            <li>{{ chapter.id }} <a href="/app_dev.php/chapter/{{ chapter.id }}">{{ chapter.title }}</a></li>
+            <li><a href="/app_dev.php/chapter/{{ chapter.id }}">{{ chapter.id }}</a></li>
         {% endfor %}
     </ul>
 {% endblock %}

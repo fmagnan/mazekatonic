@@ -39,22 +39,4 @@ class DefaultController extends Controller
         return ['chapter' => $chapter];
     }
 
-    /**
-     * @Route("/chapter/new")
-     */
-    public function createChapterAction()
-    {
-        $chapter = new Chapter();
-        $chapter->setTitle('Départ');
-        $chapter->setContent('Vous êtes dans la forêt, 2 chemins s\'offrent à vous.');
-
-
-
-        $em = $this->getDoctrine()->getManager();
-        $em->persist($chapter);
-
-        $em->flush();
-
-        return new Response('Created chapter id ' . $chapter->getId());
-    }
 }
