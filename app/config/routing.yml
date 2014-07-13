@@ -1,0 +1,5 @@
+marvin_mazekatonic:
+    resource: "@MarvinMazekatonicBundle/Controller/"
+    type:     annotation
+    prefix:   /
+

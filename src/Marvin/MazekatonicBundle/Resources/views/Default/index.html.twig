@@ -1,0 +1,10 @@
+{% extends "MarvinMazekatonicBundle::layout.html.twig" %}
+
+{% block content %}
+    <ul>
+        <li><a href="/app_dev.php/node/new">add node</a></li>
+        {% for node in nodes %}
+            <li>{{ node.id }} <a href="/app_dev.php/node/{{ node.id }}">{{ node.title }}</a></li>
+        {% endfor %}
+    </ul>
+{% endblock %}

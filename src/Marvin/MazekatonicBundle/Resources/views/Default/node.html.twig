@@ -1,0 +1,17 @@
+{% extends "MarvinMazekatonicBundle::layout.html.twig" %}
+
+{% block content %}
+    <div class="node">
+        <h2>{{ node.title }}</h2>
+
+        <p>{{ node.content }}</p>
+
+        <div class="navigation">
+            <ul>
+                {% for edge in edges %}
+                    <li><a href="/app_dev.php/node/{{ edge.id }}">{{ edge.text }}</a></li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+{% endblock %}
