@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css">
+</head>
+<body>
+<div class="container bs-docs-container">
+
+    <div class="row">
+        <div class="col-md-9" role="main">
+            <div class="bs-docs-section">
+                <h1>Angularjs sandbox</h1>
+
+
+                <div ng-app="myApp">
+                    <div ng-controller="MainCtrl">
+                        {{ text }}
+                    </div>
+
+                    <div ng-controller="UserCtrl">
+                        <p class="username">Welcome, {{ user.details.username }}</p>
+
+                        <p class="id">User ID: {{ user.details.id }}</p>
+                    </div>
+
+                    <a custom-button>Click me</a>
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.20/angular.min.js"></script>
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+<script>
+
+    var myApp = angular.module('myApp', []);
+
+    myApp.controller('MainCtrl', ['$scope', function ($scope) {
+        $scope.text = 'Hello, Angular fanatic.';
+    }]);
+
+    myApp.controller('UserCtrl', ['$scope', function ($scope) {
+
+        // Créons un namespace pour les détails de l'utilisateur
+        // Également utile pour une aide visuelle dans le DOM
+        $scope.user = {};
+        $scope.user.details = {
+            "username": "Todd Motto",
+            "id": "89101112"
+        };
+
+    }]);
+
+    myApp.directive('customButton', function () {
+        return {
+            restrict: 'A',
+            replace: true,
+            transclude: false,
+            template: '<a href="" class="myawesomebutton"><i class="icon-ok-sign"></i><span class="ng-scope">cliquez ici</span></a>',
+            link: function (scope, element, attrs) {
+                // DOM manipulation/events here!
+            }
+        };
+    });
+
+
+</script>
+</body>
+</html>
