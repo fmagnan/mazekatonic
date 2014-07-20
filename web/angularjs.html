@@ -8,70 +8,146 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css">
 </head>
 <body>
-<div class="container bs-docs-container">
+    <div class="container bs-docs-container">
 
-    <div class="row">
-        <div class="col-md-9" role="main">
-            <div class="bs-docs-section">
-                <h1>Angularjs sandbox</h1>
+        <div class="row">
+            <div class="col-md-9" role="main">
+                <div class="bs-docs-section">
+                    <h1>Angularjs sandbox</h1>
 
 
-                <div ng-app="myApp">
-                    <div ng-controller="MainCtrl">
-                        {{ text }}
-                    </div>
+                    <div ng-app="myApp">
+                        <div ng-controller="MainCtrl">
+                            {{ text }}
+                        </div>
 
-                    <div ng-controller="UserCtrl">
-                        <p class="username">Welcome, {{ user.details.username }}</p>
+                        <div ng-controller="UserCtrl">
+                            <p class="username">Welcome, {{ user.details.username }}</p>
 
-                        <p class="id">User ID: {{ user.details.id }}</p>
-                    </div>
+                            <p class="id">User ID: {{ user.details.id }}</p>
+                        </div>
 
-                    <a custom-button>Click me</a>
+                        <a custom-button>Click me</a>
 
-                </div>
+                        <div ng-controller="ReverseCtrl">
+                            <p>Sans filtre: {{ greeting }}</p>
+                            <p>Reverse: {{ greeting | reverse }}</p>
+                        </div>
 
-            </div>
-        </div>
-    </div>
+
+
+
+                        <div ng-controller="BinderCtrl">
+                            <input type="text" ng-model="myModel" placeholder="Start typing..." />
+                            <p>My model data: {{ myModel }}</p>
+                        </div>
+
+<div ng-controller="EmailsCtrl">
+<ul>
+  <li ng-repeat="message in emails.messages">
+    <p>From: {{ message.from }}</p>
+    <p>Subject: {{ message.subject }}</p>
+    <p>{{ message.sent | date:'MMM d, y h:mm:ss a' }}</p>
+  </li>
+</ul>
 </div>
 
 
-<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.20/angular.min.js"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
-<script>
+                    </div>
 
-    var myApp = angular.module('myApp', []);
+                </div>
+            </div>
+        </div>
+    </div>
 
-    myApp.controller('MainCtrl', ['$scope', function ($scope) {
-        $scope.text = 'Hello, Angular fanatic.';
-    }]);
 
-    myApp.controller('UserCtrl', ['$scope', function ($scope) {
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.20/angular.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+    <script>
 
-        // Créons un namespace pour les détails de l'utilisateur
-        // Également utile pour une aide visuelle dans le DOM
-        $scope.user = {};
-        $scope.user.details = {
-            "username": "Todd Motto",
-            "id": "89101112"
-        };
+        var myApp = angular.module('myApp', []);
 
-    }]);
+        myApp.controller('MainCtrl', ['$scope', function ($scope) {
+            $scope.text = 'Hello, Angular fanatic.';
+        }]);
 
-    myApp.directive('customButton', function () {
-        return {
-            restrict: 'A',
-            replace: true,
-            transclude: false,
-            template: '<a href="" class="myawesomebutton"><i class="icon-ok-sign"></i><span class="ng-scope">cliquez ici</span></a>',
-            link: function (scope, element, attrs) {
+        myApp.controller('UserCtrl', ['$scope', function ($scope) {
+
+            // Créons un namespace pour les détails de l'utilisateur
+            // Également utile pour une aide visuelle dans le DOM
+            $scope.user = {};
+            $scope.user.details = {
+                "username": "Todd Motto",
+                "id": "89101112"
+            };
+
+        }]);
+
+        myApp.directive('customButton', function () {
+            return {
+                restrict: 'A',
+                replace: true,
+                transclude: false,
+                template: '<a href="" class="myawesomebutton"><i class="icon-ok-sign"></i><span class="ng-scope">cliquez ici</span></a>',
+                link: function (scope, element, attrs) {
                 // DOM manipulation/events here!
             }
         };
     });
 
+        myApp.filter('reverse', function () {
+            return function (input, uppercase) {
+                var out = '';
+                for (var i = 0; i < input.length; i++) {
+                    out = input.charAt(i) + out;
+                }
+                if (uppercase) {
+                    out = out.toUpperCase();
+                }
+                return out;
+            }
+        });
 
-</script>
+        // Contrôleur inclus pour fournir des données
+        myApp.controller('ReverseCtrl', ['$scope', function ($scope) {
+            $scope.greeting = 'Todd Motto';
+        }]);
+
+
+        myApp.controller('BinderCtrl', ['$scope', function ($scope) {
+          // On capture la donnée du modèle
+          // et/ou on l'initialise avec une chaîne de caractères vide
+          $scope.myModel = '';
+      }]);
+
+myApp.controller('EmailsCtrl', ['$scope', function ($scope) {
+
+  // Crée un Object emails
+  $scope.emails = {};
+
+  // Nous écrivons ici en dur les données normalement
+  // reçues du serveur
+  $scope.emails.messages = [{
+        "from": "Steve Jobs",
+        "subject": "I think I'm holding my phone wrong :/",
+        "sent": "2013-10-01T08:05:59Z"
+    },{
+        "from": "Ellie Goulding",
+        "subject": "I've got Starry Eyes, lulz",
+        "sent": "2013-09-21T19:45:00Z"
+    },{
+        "from": "Michael Stipe",
+        "subject": "Everybody hurts, sometimes.",
+        "sent": "2013-09-12T11:38:30Z"
+    },{
+        "from": "Jeremy Clarkson",
+        "subject": "Think I've found the best car... In the world",
+        "sent": "2013-09-03T13:15:11Z"
+    }];
+
+}]);
+
+
+    </script>
 </body>
 </html>
