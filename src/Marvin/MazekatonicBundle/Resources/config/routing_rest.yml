@@ -1,0 +1,4 @@
+books:
+  resource:     "MarvinMazekatonicBundle:BookRest"
+  type:         rest
+  name_prefix:  api_

@@ -1,5 +1,2 @@
-marvin_mazekatonic:
-    resource: "@MarvinMazekatonicBundle/Controller/"
-    type:     annotation
-    prefix:   /
-
+_mazekatonic:
+  resource : "@MarvinMazekatonicBundle/Resources/config/routing.yml"

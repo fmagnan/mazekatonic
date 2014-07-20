@@ -4,12 +4,16 @@ namespace Marvin\MazekatonicBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
+use JMS\Serializer\Annotation\ExclusionPolicy;
+use JMS\Serializer\Annotation\Expose;
 
 /**
  * Book
  *
  * @ORM\Table()
  * @ORM\Entity
+ *
+ * @ExclusionPolicy("all")
  */
 class Book
 {
@@ -26,6 +30,8 @@ class Book
      * @var string
      *
      * @ORM\Column(name="title", type="string", length=255)
+     *
+     * @Expose
      */
     protected $title;
 
